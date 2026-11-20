@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+
+<html lang="ar" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<meta name="theme-color" content="#090b10">
+
+<title>جوال إبراهيم</title>
+
+<style>
+
+:root{--bg:#090b10;--panel:#171a21;--muted:#8e929c;--line:#2a2e38;--blue:#1685ff;--green:#25c768}
+
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 50% 15%,#293142,#090b10 65%);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:#fff;min-height:100vh;display:grid;place-items:center;padding:16px}
+
+button,input,textarea{font:inherit}button{cursor:pointer;color:inherit}
+
+.phone{width:min(390px,96vw);height:min(844px,94dvh);min-height:600px;background:#050609;border:7px solid #24262b;border-radius:48px;box-shadow:0 25px 80px #000b,inset 0 0 0 1px #555;position:relative;overflow:hidden}
+
+.screen{position:absolute;inset:0;border-radius:40px;overflow:hidden;background:#10131b}
+
+.status{height:34px;padding:8px 24px 0;display:flex;justify-content:space-between;align-items:center;font-size:12px;position:absolute;top:0;left:0;right:0;z-index:8;text-shadow:0 1px 4px #000}
+
+.dynamic{position:absolute;z-index:10;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;border-radius:20px;background:#000}
+
+.lock{position:absolute;inset:0;background:linear-gradient(160deg,#33445b,#172536 45%,#090d15);display:flex;flex-direction:column;align-items:center;padding-top:100px;z-index:20}
+
+.lock:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 35%,#91a6bd44,transparent 50%)}
+
+.lock>*{position:relative}.lock-date{font-size:17px;color:#e5eaf2}.lock-time{font-size:82px;font-weight:200;letter-spacing:-4px;margin-top:4px}.lock-note{margin-top:auto;margin-bottom:80px;color:#d7deea;font-size:13px}
+
+.unlock{position:absolute;bottom:25px;border:0;background:#ffffff26;border:1px solid #ffffff55;border-radius:30px;padding:12px 24px}
+
+.home{position:absolute;inset:0;padding:65px 22px 34px;background:linear-gradient(155deg,#26384a,#182434 48%,#10141d);display:none}
+
+.home:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 10%,#9ab3cc33,transparent 38%),radial-gradient(circle at 15% 70%,#7187a322,transparent 45%);pointer-events:none}
+
+.home>*{position:relative}.home-date{font-size:13px;color:#d7dfeb;margin-bottom:8px}.home-clock{font-size:44px;font-weight:300;margin-bottom:24px}
+
+.widget{background:#ffffff1b;border:1px solid #ffffff25;border-radius:20px;padding:13px 15px;margin-bottom:22px;backdrop-filter:blur(14px)}
+
+.widget strong{font-size:14px}.widget small{color:#d5dce6}.app-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px 12px}
+
+.app{border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:6px;font-size:11px;min-width:0}
+
+.app-icon{width:55px;height:55px;border-radius:15px;display:grid;place-items:center;font-size:28px;box-shadow:0 5px 12px #0004;position:relative}
+
+.app-icon.photos{background:linear-gradient(135deg,#fff,#e9edf4);color:#f45c70}
+
+.app-icon.whatsapp{background:#20c765}.app-icon.notes{background:linear-gradient(#fff 0 28%,#f6d75a 28%);color:#333}
+
+.app-icon.files{background:#dceaff;color:#4b8ee8}.app-icon.xapp{background:#050505;border:1px solid #555}
+
+.app-icon.camera{background:linear-gradient(145deg,#444,#111)}.app-icon.weather{background:linear-gradient(145deg,#4da9ef,#2465bd)}
+
+.app-icon.roblox{background:#fff;color:#111;font-weight:900}
+
+.app-icon.phoneapp{background:#27c86b}.app-icon.settings{background:linear-gradient(145deg,#aab2bd,#58616d)}
+
+.dock{position:absolute;bottom:14px;left:14px;right:14px;height:78px;border-radius:25px;background:#ffffff25;border:1px solid #ffffff25;display:flex;justify-content:space-evenly;align-items:center;backdrop-filter:blur(18px)}
+
+.dock .app-icon{width:49px;height:49px}
+
+.window{display:none;position:absolute;inset:0;background:#f5f5f7;color:#15161a;z-index:12;padding-top:35px;overflow:hidden}
+
+.window.dark{background:#0d0f14;color:#fff}.window-head{height:53px;display:flex;align-items:center;justify-content:space-between;padding:0 17px;border-bottom:1px solid #00000012;font-weight:700;background:inherit}
+
+.back{border:0;background:none;color:#1685ff;font-size:15px;padding:8px 0}
+
+.content{height:calc(100% - 53px);overflow:auto;padding:15px}
+
+.bottom-home{position:absolute;bottom:7px;left:50%;transform:translateX(-50%);width:115px;height:4px;background:#777;border-radius:8px;z-index:30;cursor:pointer}
+
+.section-title{font-size:24px;font-weight:800;margin:5px 0 17px}
+
+.chat-row{display:flex;align-items:center;gap:12px;padding:13px 2px;border-bottom:1px solid #e5e5e8;cursor:pointer}
+
+.avatar{width:43px;height:43px;border-radius:50%;display:grid;place-items:center;background:#dce7f5;color:#31516e;font-weight:700;flex-shrink:0}
+
+.chat-meta{flex:1;min-width:0}.chat-meta b{display:block;font-size:15px}.chat-meta small{color:#777;display:block;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+.chat-time{font-size:11px;color:#888}
+
+.chat-view{display:none;position:absolute;inset:88px 0 0;background:#e9e6df;color:#161616;z-index:3;flex-direction:column}
+
+.chat-messages{flex:1;overflow:auto;padding:14px 12px;background:linear-gradient(#e9e6df,#e6e2d8)}
+
+.bubble{max-width:82%;width:max-content;padding:9px 12px;border-radius:13px;margin:7px 0;font-size:14px;line-height:1.5;box-shadow:0 1px 1px #0001}
+
+.bubble.them{background:#fff;border-top-right-radius:4px}.bubble.me{background:#d4f7c8;margin-right:auto;border-top-left-radius:4px}
+
+.bubble small{display:block;text-align:left;font-size:9px;color:#777;margin-top:3px}
+
+.chat-compose{display:flex;gap:7px;padding:9px;background:#f5f4f0;align-items:center}
+
+.chat-compose input{flex:1;min-width:0;border:0;border-radius:22px;padding:11px 14px;background:#fff;color:#111;outline:none}
+
+.send{border:0;border-radius:50%;width:40px;height:40px;background:#168b62;color:#fff;font-size:18px}
+
+.archive-link{padding:14px 5px;color:#1685ff;cursor:pointer;border-bottom:1px solid #eee}
+
+.note-card{background:#fff4c6;border-radius:14px;padding:16px;margin-bottom:13px;box-shadow:0 2px 7px #0001;color:#222}
+
+.note-card h3{margin:0 0 10px;font-size:17px}.note-card p{margin:0;line-height:1.8}
+
+.task{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #eadfae}.task input{width:19px;height:19px;accent-color:#1685ff}.task.done span{text-decoration:line-through;color:#888}
+
+.file-row{display:flex;align-items:center;gap:13px;background:#fff;padding:15px;border-radius:12px;margin-bottom:10px;cursor:pointer}.file-icon{font-size:28px;color:#438be4}
+
+.file-message{display:none;background:#fff;border-radius:15px;padding:28px 15px;text-align:center;font-weight:700;margin-top:22px}
+
+.x-profile{background:#fff;color:#111;min-height:100%}.x-cover{height:125px;background:linear-gradient(120deg,#28394b,#8093a5);display:grid;place-items:center;color:#ffffff88;font-size:12px}
+
+.x-avatar{width:72px;height:72px;border-radius:50%;background:#c7d1dc;border:4px solid #fff;margin-top:-35px;margin-right:16px;display:grid;place-items:center;color:#3b4c60;font-size:23px}
+
+.x-info{padding:5px 16px 14px}.x-info h3{margin:3px 0}.x-info small{color:#777}.x-bio{font-size:13px;margin-top:10px}
+
+.tweet{border-top:1px solid #e8e8e8;padding:15px 14px;color:#111;font-size:14px;line-height:1.7}
+
+.tweet-compose{padding:12px;border-top:1px solid #ddd}.tweet-compose textarea{width:100%;height:75px;border:1px solid #ddd;border-radius:12px;padding:10px;resize:none;color:#111}
+
+.tweet-compose button{background:#111;color:#fff;border:0;border-radius:22px;padding:9px 20px;margin-top:8px}
+
+.camera-screen{position:absolute;inset:0;background:#000}
+
+.weather-card{background:linear-gradient(145deg,#428bc7,#28588d);border-radius:20px;padding:20px;color:white;text-align:center}
+
+.weather-card .temp{font-size:62px;font-weight:200}.weather-card p{margin:5px}
+
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px}
+
+.photo-slot{aspect-ratio:1;background:#e4e6e9;border:1px dashed #aab0ba;border-radius:5px;display:grid;place-items:center;color:#7b8490;font-size:11px;text-align:center;padding:5px;overflow:hidden}
+
+.photo-slot img{width:100%;height:100%;object-fit:cover}
+
+.photo-instructions{font-size:12px;color:#777;line-height:1.7;margin-bottom:12px}
+
+.toast{position:absolute;z-index:50;bottom:65px;left:50%;transform:translateX(-50%);background:#222;color:#fff;padding:10px 16px;border-radius:20px;font-size:12px;display:none;white-space:nowrap}
+
+@media(max-height:680px){.home{padding-top:52px}.home-clock{font-size:34px;margin-bottom:12px}.widget{margin-bottom:12px;padding:9px}.app-grid{gap:13px 10px}.app-icon{width:48px;height:48px}}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="phone">
+
+ <div class="screen">
+
+  <div class="status"><span id="statusTime">9:41</span><span>●●●  ▰</span></div><div class="dynamic"></div>
+
+  <div class="lock" id="lock">
+
+   <div class="lock-date" id="lockDate">الجمعة، ٢٠ نوفمبر</div><div class="lock-time" id="lockTime">9:41</div>
+
+   <div class="lock-note">جوال إبراهيم</div>
+
+   <button class="unlock" onclick="unlockPhone()">اضغط للفتح ↑</button>
+
+  </div>
+
+  <main class="home" id="home">
+
+   <div class="home-date" id="homeDate">الجمعة، ٢٠ نوفمبر</div><div class="home-clock" id="homeClock">9:41</div>
+
+   <div class="widget"><strong>🌤 جدة</strong><br><small>حالة الطقس في جدة</small><span style="float:left;font-size:24px">☀️ 30°</span></div>
+
+   <div class="app-grid">
+
+    <button class="app" onclick="openApp('photos')"><span class="app-icon photos">✿</span>الصور</button>
+
+    <button class="app" onclick="openApp('whatsapp')"><span class="app-icon whatsapp">☎</span>WhatsApp</button>
+
+    <button class="app" onclick="openApp('notes')"><span class="app-icon notes">▤</span>الملاحظات</button>
+
+    <button class="app" onclick="openApp('files')"><span class="app-icon files">📁</span>الملفات</button>
+
+    <button class="app" onclick="openApp('x')"><span class="app-icon xapp">𝕏</span>X</button>
+
+    <button class="app" onclick="openApp('camera')"><span class="app-icon camera">📷</span>الكاميرا</button>
+
+    <button class="app" onclick="openApp('weather')"><span class="app-icon weather">☀️</span>الطقس</button>
+
+    <button class="app" onclick="toast('روبلوكس - أيقونة فقط')"><span class="app-icon roblox">◇</span>Roblox</button>
+
+   </div>
+
+   <div class="dock">
+
+    <button class="app" onclick="openApp('whatsapp')"><span class="app-icon whatsapp">☎</span></button>
+
+    <button class="app" onclick="openApp('photos')"><span class="app-icon photos">✿</span></button>
+
+    <button class="app" onclick="openApp('notes')"><span class="app-icon notes">▤</span></button>
+
+    <button class="app" onclick="openApp('camera')"><span class="app-icon camera">📷</span></button>
+
+   </div>
+
+  </main>  <section class="window" id="photos"><div class="window-head"><button class="back" onclick="closeApp()">تم</button><span>الصور</span><span>•••</span></div><div class="content">
+   <div class="section-title">المكتبة</div><p class="photo-instructions">أماكن الصور جاهزة. أضيفي صورك بوضع ملفات الصور داخل مجلد images ثم غيّري أسماء الملفات في الكود.</p>
+   <div class="photo-grid">
+    <div class="photo-slot">صورة 1<br>images/photo1.jpg</div><div class="photo-slot">صورة 2<br>images/photo2.jpg</div><div class="photo-slot">صورة 3<br>images/photo3.jpg</div>
+    <div class="photo-slot">صورة 4<br>images/photo4.jpg</div><div class="photo-slot">صورة 5<br>images/photo5.jpg</div><div class="photo-slot">صورة 6<br>images/photo6.jpg</div>
+    <div class="photo-slot">صورة 7<br>images/photo7.jpg</div><div class="photo-slot">صورة 8<br>images/photo8.jpg</div><div class="photo-slot">صورة 9<br>images/photo9.jpg</div>
+   </div>
+  </div></section>
+
+  <section class="window" id="whatsapp"><div class="window-head"><button class="back" onclick="closeApp()">رجوع</button><span>WhatsApp</span><span>＋</span></div>
+   <div class="content" id="waList">
+    <div class="section-title">الدردشات</div><div class="archive-link" onclick="showArchive()">▣　الرسائل المؤرشفة <span style="float:left;color:#888">1</span></div>
+    <div id="chatRows"></div>
+   </div>
+   <div class="chat-view" id="chatView">
+    <div class="window-head"><button class="back" onclick="backToChats()">‹ الدردشات</button><span id="chatTitle">المحادثة</span><span>⋮</span></div>
+    <div class="chat-messages" id="chatMessages"></div>
+    <div class="chat-compose"><input id="chatInput" placeholder="اكتب رسالة..." onkeydown="if(event.key==='Enter')sendMessage()"><button class="send" onclick="sendMessage()">➤</button></div>
+   </div>
+  </section>
+
+  <section class="window" id="notes"><div class="window-head"><button class="back" onclick="closeApp()">تم</button><span>الملاحظات</span><span>•••</span></div><div class="content">
+   <div class="section-title">كل iCloud</div>
+   <div class="note-card"><h3>📌 موعد التصوير</h3><p>السبت ٢١ نوفمبر ٢ الظهر مقطع بقناتي</p></div>
+   <div class="note-card"><h3>قائمة الالتزامات</h3><div id="tasks"></div></div>
+  </div></section>
+
+  <section class="window" id="files"><div class="window-head"><button class="back" onclick="closeApp()">رجوع</button><span>تصفح</span><span>•••</span></div><div class="content">
+   <div class="section-title">على الـ iPhone</div>
+   <div class="file-row" onclick="showFile('file1')"><span class="file-icon">🎞️</span><span>مقطع شبيهي</span><span style="margin-right:auto;color:#aaa">›</span></div>
+   <div class="file-row" onclick="showFile('file2')"><span class="file-icon">🎬</span><span>مقطع فلوق دبي</span><span style="margin-right:auto;color:#aaa">›</span></div>
+   <div class="file-message" id="fileMessage">الملفات ضايعه من جوال ابراهيم</div>
+  </div></section>
+
+  <section class="window" id="x"><div class="window-head"><button class="back" onclick="closeApp()">رجوع</button><span>الملف الشخصي</span><span>•••</span></div><div class="content" style="padding:0">
+   <div class="x-profile">
+    <div class="x-cover">مكان الهيدر — أضيفي صورتك هنا</div>
+    <div class="x-avatar">إ</div>
+    <div class="x-info"><h3>ابراهيم</h3><small>@ibrahim</small><div class="x-bio">الحساب الشخصي</div><small>0 يتابع · 0 متابعون</small></div>
+    <div class="tweet"><b>ابراهيم　<span style="color:#888;font-weight:400">@ibrahim · الآن</span></b><p>هنا مكان التغريدة الأساسية — اكتبي نص التغريدة التي تبغينها.</p></div>
+    <div id="tweets"></div>
+    <div class="tweet-compose"><textarea id="tweetInput" placeholder="ماذا يحدث؟"></textarea><button onclick="postTweet()">غرّد</button></div>
+   </div>
+  </div></section>
+
+  <section class="window dark" id="camera"><div class="camera-screen"></div><div class="window-head" style="position:relative;background:#000;color:#fff;border:0"><button class="back" onclick="closeApp()">إغلاق</button><span>الكاميرا</span><span>●</span></div></section>
+
+  <section class="window dark" id="weather"><div class="window-head"><button class="back" onclick="closeApp()">تم</button><span>الطقس</span><span>•••</span></div><div class="content">
+   <div class="weather-card"><div style="font-size:17px">جدة</div><div class="temp">30°</div><p>حالة الطقس</p><p>تحديث الطقس غير مباشر في هذه النسخة</p><div style="margin-top:22px;border-top:1px solid #ffffff44;padding-top:12px">العظمى 34°　　الصغرى 27°</div></div>
+   <p style="text-align:center;color:#aaa;font-size:12px;margin-top:18px">يمكن تحديث درجات الحرارة يدويًا من الكود.</p>
+  </div></section>
+
+  <div class="bottom-home" onclick="closeApp()"></div><div class="toast" id="toast"></div>
+ </div>
+</div>
+DIL0
